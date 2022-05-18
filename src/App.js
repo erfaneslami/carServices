@@ -1,7 +1,8 @@
 import "./App.sass";
+import SignUp from "./Pages/SignUp";
 
 function App() {
-  return <p>salam</p>;
+  return <SignUp />;
 }
 
 export default App;
