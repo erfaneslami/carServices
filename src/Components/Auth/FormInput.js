@@ -7,7 +7,6 @@ const FormInput = (props) => {
       error={props.error}
       fullWidth
       helperText={props.helperText}
-      size="small"
       type={props.type}
       label={props.label}
       variant="standard"

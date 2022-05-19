@@ -2,6 +2,9 @@ import { Box, Button } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import FormInput from "./FormInput";
 
+const emailPattern =
+  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
 const SignUpForm = () => {
   const { control, handleSubmit, formState, getValues } = useForm({
     mode: "onBlur",
@@ -18,9 +21,6 @@ const SignUpForm = () => {
   const onSubmit = (formData) => {
     console.log(formData);
   };
-
-  const emailPattern =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   return (
     <Box
@@ -109,7 +109,7 @@ const SignUpForm = () => {
       />
 
       <Button variant="contained" type="submit" fullWidth sx={{ mt: 2 }}>
-        sign up
+        Create Account
       </Button>
     </Box>
   );
