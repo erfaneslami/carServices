@@ -1,17 +1,18 @@
 import { Typography } from "@mui/material";
-import { Box } from "@mui/system";
 
 const AuthHeader = (props) => {
   return (
-    <Box component={"header"} sx={{ textAlign: "left" }}>
+    <>
       <Typography
         variant="h1"
         ml={2}
         sx={{ fontSize: "2.8rem", fontWeight: 500 }}
+        align="left"
       >
         {props.main}
       </Typography>
       <Typography
+        align="left"
         variant="subtitle1"
         ml={2.2}
         mt={-0.7}
@@ -19,7 +20,7 @@ const AuthHeader = (props) => {
       >
         {props.sub}
       </Typography>
-    </Box>
+    </>
   );
 };
 
