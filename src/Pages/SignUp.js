@@ -5,8 +5,8 @@ import SignUpForm from "../Components/Auth/SignUpForm";
 
 const SignIn = () => {
   return (
-    <Box component={"main"} textAlign="center">
-      <AuthHeader />
+    <Box component={"main"} p={2} textAlign="center">
+      <AuthHeader main="Get started" sub="Create an Account" />
       <SignUpForm />
       <Divider
         variant="middle"
