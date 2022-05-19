@@ -15,7 +15,6 @@ const AuthHeader = (props) => {
         align="left"
         variant="subtitle1"
         ml={2.2}
-        mt={-0.7}
         sx={{ fontSize: "1.2rem" }}
       >
         {props.sub}
