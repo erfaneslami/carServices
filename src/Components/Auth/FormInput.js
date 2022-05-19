@@ -10,6 +10,15 @@ const FormInput = (props) => {
       type={props.type}
       label={props.label}
       variant="standard"
+      sx={{
+        "& input": {
+          fontSize: "1.8rem",
+          paddingLeft: ".8rem",
+        },
+        "& label": {
+          fontSize: "1.4rem",
+        },
+      }}
       margin="dense"
     />
   );
