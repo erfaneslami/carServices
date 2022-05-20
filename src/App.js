@@ -1,6 +1,6 @@
 import "./App.sass";
 import Login from "./Pages/Login";
-import SignUp from "./Pages/SignUp";
+// import SignUp from "./Pages/SignUp";
 
 function App() {
   return (

@@ -6,7 +6,7 @@ const emailPattern =
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const LoginForm = () => {
-  const { control, handleSubmit, formState, getValues } = useForm({
+  const { control, handleSubmit, formState } = useForm({
     mode: "onBlur",
     defaultValues: {
       fullName: "",
