@@ -18,7 +18,7 @@ const Home = () => {
       <Divider sx={{ margin: "1rem 0" }} />
       <Box display="grid" gridTemplateColumns="repeat(1,1fr)" gap={2}>
         <Box>
-          <CarCard />
+          <CarCard brand="Peugeot" carName="207" km="30.000" />
         </Box>
         <Box>card2</Box>
       </Box>
