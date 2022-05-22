@@ -16,7 +16,7 @@ const Home = () => {
         <AuthHeader main="erfan's Garage" sub="welcome" />
       </Box>
       <Divider sx={{ margin: "1rem 0" }} />
-      <Box display="grid" gridTemplateColumns="repeat(2,1fr)" gap={2}>
+      <Box display="grid" gridTemplateColumns="repeat(1,1fr)" gap={2}>
         <Box>
           <CarCard />
         </Box>
