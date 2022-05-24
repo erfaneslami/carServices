@@ -9,6 +9,7 @@ import {
 import AuthHeader from "../Components/Auth/AuthHeader";
 import CarCard from "../Components/Home/CarCard";
 import AddIcon from "@mui/icons-material/Add";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -54,6 +55,8 @@ const Home = () => {
               height: "6rem",
               margin: "0 auto",
             }}
+            component={Link}
+            to="/add-car"
           >
             <AddIcon fontSize="large" />
           </Button>

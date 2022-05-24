@@ -1,5 +1,6 @@
 import { AppBar, Box, Button, Toolbar } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 import FormInput from "../Auth/FormInput";
 
 const AddCarForm = () => {
@@ -80,7 +81,14 @@ const AddCarForm = () => {
 
       <AppBar position="fixed" color="" sx={{ top: "auto", bottom: 0 }}>
         <Toolbar sx={{ width: "100%" }}>
-          <Button variant="contained" color="error" fullWidth sx={{ m: 2 }}>
+          <Button
+            variant="contained"
+            color="error"
+            fullWidth
+            sx={{ m: 2 }}
+            component={Link}
+            to="/welcome"
+          >
             Cancel
           </Button>
           <Button variant="contained" type="submit" fullWidth sx={{ m: 2 }}>

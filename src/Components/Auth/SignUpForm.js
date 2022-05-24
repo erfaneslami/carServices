@@ -1,5 +1,6 @@
 import { Box, Button, Typography } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 import FormInput from "./FormInput";
 
 const emailPattern =
@@ -108,11 +109,21 @@ const SignUpForm = () => {
         }}
       />
 
-      <Button variant="contained" type="submit" fullWidth sx={{ mt: 2 }}>
+      <Button
+        variant="contained"
+        type="submit"
+        fullWidth
+        sx={{ mt: 2 }}
+        component={Link}
+        to="/welcome"
+      >
         Create Account
       </Button>
       <Typography mt={1.5}>
-        Already Have an Account? <Typography component="a">sign in </Typography>
+        Already Have an Account?{" "}
+        <Typography component={Link} to="/login">
+          sign in{" "}
+        </Typography>
         now
       </Typography>
     </Box>
