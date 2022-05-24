@@ -1,6 +1,8 @@
 import { Box, Button, Typography } from "@mui/material";
+import { useContext } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import AuthContext from "../../Store/Auth-context";
 import FormInput from "./FormInput";
 
 const emailPattern =
@@ -16,11 +18,13 @@ const SignUpForm = () => {
       confirmPass: "",
     },
   });
-
   const { errors } = formState;
+
+  const authCtx = useContext(AuthContext);
 
   const onSubmit = (formData) => {
     console.log(formData);
+    authCtx.signup(formData);
   };
 
   return (
@@ -109,14 +113,7 @@ const SignUpForm = () => {
         }}
       />
 
-      <Button
-        variant="contained"
-        type="submit"
-        fullWidth
-        sx={{ mt: 2 }}
-        component={Link}
-        to="/welcome"
-      >
+      <Button variant="contained" type="submit" fullWidth sx={{ mt: 2 }}>
         Create Account
       </Button>
       <Typography mt={1.5}>

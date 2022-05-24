@@ -9,8 +9,26 @@ const AuthContextProvider = (props) => {
     setIsLoggedIn(true);
   };
 
-  const signupHandler = () => {
+  const signupHandler = async (userData) => {
+    console.log(userData.email);
+    console.log(userData.password);
     // send signup request
+    const request = await fetch(
+      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBCrkX0aUvOpsnp-QAW1mds8-r9HDqrWfc",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({
+          email: userData.email,
+          password: userData.password,
+          returnSecureToken: true,
+        }),
+      }
+    );
+    console.log(request);
     setIsLoggedIn(true);
   };
 
