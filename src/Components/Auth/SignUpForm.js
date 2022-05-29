@@ -1,5 +1,5 @@
 import { Box, Button, Typography } from "@mui/material";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import AuthContext from "../../Store/Auth-context";
@@ -19,12 +19,36 @@ const SignUpForm = () => {
     },
   });
   const { errors } = formState;
-
+  const [error, setError] = useState(null);
   const authCtx = useContext(AuthContext);
 
-  const onSubmit = (formData) => {
-    console.log(formData);
-    authCtx.signup(formData);
+  const onSubmit = async (userData) => {
+    try {
+      const response = await fetch(
+        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBCrkX0aUvOpsnp-QAW1mds8-r9HDqrWfc",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({
+            email: userData.email,
+            password: userData.password,
+            returnSecureToken: true,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.error) throw data;
+
+      authCtx.signup(data.token, userData.fullName);
+    } catch (error) {
+      console.log(error);
+      setError(error.error.message);
+    }
   };
 
   return (
@@ -33,6 +57,7 @@ const SignUpForm = () => {
       onSubmit={handleSubmit(onSubmit)}
       sx={{ width: "70vw", margin: "0 auto" }}
     >
+      {error && <Typography>{error}</Typography>}
       <Controller
         name="fullName"
         control={control}

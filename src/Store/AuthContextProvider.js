@@ -2,41 +2,28 @@ import { useState } from "react";
 import AuthContext from "./Auth-context";
 
 const AuthContextProvider = (props) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [token, setToken] = useState(null);
+  const [username, setUsername] = useState(null);
+
+  const isLoggedIn = !!token;
 
   const loginHandler = () => {
     // send login request
-    setIsLoggedIn(true);
   };
 
-  const signupHandler = async (userData) => {
-    console.log(userData.email);
-    console.log(userData.password);
+  const signupHandler = async (token, username) => {
     // send signup request
-    const request = await fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBCrkX0aUvOpsnp-QAW1mds8-r9HDqrWfc",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-
-        body: JSON.stringify({
-          email: userData.email,
-          password: userData.password,
-          returnSecureToken: true,
-        }),
-      }
-    );
-    console.log(request);
-    setIsLoggedIn(true);
+    setToken(token);
+    setUsername(username);
   };
 
   const logoutHandler = () => {
-    setIsLoggedIn(false);
+    setToken(null);
   };
 
   const AuthContextValue = {
+    username,
+    token,
     isLoggedIn,
     login: loginHandler,
     logout: logoutHandler,
