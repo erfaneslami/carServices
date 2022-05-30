@@ -1,8 +1,9 @@
 import { Box, Button, Typography } from "@mui/material";
 import { useContext, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../../Store/Auth-context";
+import LoadingSpinner from "../../UI/LoadingSpinner";
 import FormInput from "./FormInput";
 
 const emailPattern =
@@ -20,10 +21,13 @@ const SignUpForm = () => {
   });
   const { errors } = formState;
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const authCtx = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const onSubmit = async (userData) => {
     try {
+      setLoading(true);
       const response = await fetch(
         "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBCrkX0aUvOpsnp-QAW1mds8-r9HDqrWfc",
         {
@@ -44,8 +48,11 @@ const SignUpForm = () => {
 
       if (data.error) throw data;
 
+      setLoading(false);
       authCtx.signup(data.token, userData.fullName);
+      navigate("/welcome", { replace: true });
     } catch (error) {
+      setLoading(false);
       console.log(error);
       setError(error.error.message);
     }
@@ -58,6 +65,7 @@ const SignUpForm = () => {
       sx={{ width: "70vw", margin: "0 auto" }}
     >
       {error && <Typography>{error}</Typography>}
+      {loading && <LoadingSpinner />}
       <Controller
         name="fullName"
         control={control}
