@@ -7,12 +7,11 @@ const AuthContextProvider = (props) => {
 
   const isLoggedIn = !!token;
 
-  const loginHandler = () => {
-    // send login request
+  const loginHandler = (token) => {
+    setToken(token);
   };
 
   const signupHandler = async (token, username) => {
-    // send signup request
     setToken(token);
     setUsername(username);
   };
