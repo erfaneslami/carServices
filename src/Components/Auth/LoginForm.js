@@ -44,16 +44,17 @@ const LoginForm = () => {
         }
       );
 
-      const data = response.json();
+      const data = await response.json();
 
       if (data.error) throw data;
 
-      authCtx.login(data.idToken);
+      console.log(data);
+      authCtx.login(data.idToken, data.localId);
       // redirect
       navigate("/welcome", { replace: true });
       setLoading(false);
     } catch (error) {
-      setError(error.error.message);
+      setError(error?.error?.message);
       setLoading(false);
     }
   };

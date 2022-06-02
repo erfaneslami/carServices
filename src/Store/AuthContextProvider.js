@@ -4,16 +4,19 @@ import AuthContext from "./Auth-context";
 const AuthContextProvider = (props) => {
   const [token, setToken] = useState(null);
   const [username, setUsername] = useState(null);
+  const [localId, setLocalId] = useState(null);
 
   const isLoggedIn = !!token;
 
-  const loginHandler = (token) => {
+  const loginHandler = (token, localId) => {
     setToken(token);
+    setLocalId(localId);
   };
 
-  const signupHandler = async (token, username) => {
+  const signupHandler = (token, username, localId) => {
     setToken(token);
     setUsername(username);
+    setLocalId(localId);
   };
 
   const logoutHandler = () => {
@@ -23,6 +26,7 @@ const AuthContextProvider = (props) => {
   const AuthContextValue = {
     username,
     token,
+    localId: localId,
     isLoggedIn,
     login: loginHandler,
     logout: logoutHandler,

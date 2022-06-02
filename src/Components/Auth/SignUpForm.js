@@ -49,7 +49,7 @@ const SignUpForm = () => {
       if (data.error) throw data;
 
       setLoading(false);
-      authCtx.signup(data.idToken, userData.fullName);
+      authCtx.signup(data.idToken, userData.fullName, data.localId);
       navigate("/welcome", { replace: true });
     } catch (error) {
       setLoading(false);
