@@ -90,7 +90,7 @@ const Home = () => {
           </>
         )}
 
-        {!cars && (
+        {!cars && !isLoading && (
           <Typography sx={{ margin: "30vh 0" }} variant="h4">
             Garage is Empty!
           </Typography>
