@@ -5,7 +5,7 @@ const AuthContextProvider = (props) => {
   const initialAuth = JSON.parse(localStorage.getItem("userAuth"));
   console.log(initialAuth);
   const [token, setToken] = useState(initialAuth?.token);
-  const [username, setUsername] = useState(null);
+  const [username, setUsername] = useState(initialAuth?.username);
   const [localId, setLocalId] = useState(initialAuth?.localId);
 
   const isLoggedIn = !!token;
@@ -15,14 +15,20 @@ const AuthContextProvider = (props) => {
     setLocalId(localId);
     setUsername(username);
 
-    localStorage.setItem("userAuth", JSON.stringify({ token, localId }));
+    localStorage.setItem(
+      "userAuth",
+      JSON.stringify({ token, localId, username })
+    );
   };
 
   const signupHandler = (token, username, localId) => {
     setToken(token);
     setUsername(username);
     setLocalId(localId);
-    localStorage.setItem("userAuth", JSON.stringify({ token, localId }));
+    localStorage.setItem(
+      "userAuth",
+      JSON.stringify({ token, localId, username })
+    );
   };
 
   const logoutHandler = () => {
