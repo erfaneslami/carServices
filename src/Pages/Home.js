@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   Divider,
-  Skeleton,
   Toolbar,
   Typography,
 } from "@mui/material";
@@ -13,6 +12,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { Link } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../Store/Auth-context";
+import CarSkeleton from "../Components/Home/CarSkeleton";
 
 const Home = () => {
   const authCtx = useContext(AuthContext);
@@ -80,27 +80,13 @@ const Home = () => {
           })}
 
         {isLoading && (
-          <Box
-            display={"grid"}
-            gridTemplateColumns="1fr 2.5fr"
-            alignItems="stretch"
-            columnGap={2}
-          >
-            <Box sx={{ maxHeight: "18vh" }}>
-              <Skeleton variant="text" height={"30%"} />
-              <Skeleton variant="text" height={"25%"} />
-              <Skeleton variant="text" height={"15%"} />
-              <Skeleton variant="text" height={"35%"} />
-            </Box>
-            <Box>
-              <Skeleton
-                variant="rectangular"
-                height={"18vh"}
-                // width={"55vw"}
-                sx={{ marginLeft: "auto" }}
-              />
-            </Box>
-          </Box>
+          <>
+            <CarSkeleton />
+            <CarSkeleton />
+            <CarSkeleton />
+            <CarSkeleton />
+            <CarSkeleton />
+          </>
         )}
 
         {!cars && (
