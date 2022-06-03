@@ -42,8 +42,6 @@ const Home = () => {
       console.log(error);
       setIsLoading(false);
     });
-
-    // setIsLoading(false);
   }, [authCtx.localId]);
 
   return (
@@ -56,7 +54,7 @@ const Home = () => {
       flexDirection="column"
     >
       <Box sx={{ mt: 2 }}>
-        <AuthHeader main="erfan's Garage" sub="welcome" />
+        <AuthHeader main={authCtx.username + "'s Garage"} sub="welcome" />
       </Box>
       <Divider sx={{ margin: "1rem 0" }} />
       <Box

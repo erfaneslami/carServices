@@ -48,8 +48,16 @@ const LoginForm = () => {
 
       if (data.error) throw data;
 
-      console.log(data);
-      authCtx.login(data.idToken, data.localId);
+      const getUsernameResponse = await fetch(
+        `https://carservices-server-default-rtdb.firebaseio.com/users/${data.localId}.json`,
+        {
+          method: "GET",
+        }
+      );
+
+      const username = await getUsernameResponse.json();
+
+      authCtx.login(data.idToken, data.localId, username.username);
       // redirect
       navigate("/welcome", { replace: true });
       setLoading(false);

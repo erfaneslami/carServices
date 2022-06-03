@@ -48,13 +48,23 @@ const SignUpForm = () => {
 
       if (data.error) throw data;
 
+      const responseToDatabase = await fetch(
+        `https://carservices-server-default-rtdb.firebaseio.com/users/${data.localId}.json`,
+        {
+          method: "PUT",
+          body: JSON.stringify({
+            username: userData.fullName,
+          }),
+        }
+      );
+
       setLoading(false);
       authCtx.signup(data.idToken, userData.fullName, data.localId);
       navigate("/welcome", { replace: true });
     } catch (error) {
       setLoading(false);
       console.log(error);
-      setError(error.error.message);
+      setError(error?.error?.message);
     }
   };
 

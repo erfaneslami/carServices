@@ -10,9 +10,11 @@ const AuthContextProvider = (props) => {
 
   const isLoggedIn = !!token;
 
-  const loginHandler = (token, localId) => {
+  const loginHandler = (token, localId, username) => {
     setToken(token);
     setLocalId(localId);
+    setUsername(username);
+
     localStorage.setItem("userAuth", JSON.stringify({ token, localId }));
   };
 
