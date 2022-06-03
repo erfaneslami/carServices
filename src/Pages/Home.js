@@ -16,7 +16,7 @@ import CarSkeleton from "../Components/Home/CarSkeleton";
 
 const Home = () => {
   const authCtx = useContext(AuthContext);
-  const [cars, setCars] = useState([]);
+  const [cars, setCars] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -32,17 +32,17 @@ const Home = () => {
         }
       );
       const cars = await response.json();
-
+      console.log(cars);
+      if (cars === null) throw Error("no cars available !");
       setCars(Object.entries(cars));
       setIsLoading(false);
     };
 
-    try {
-      getCars();
-    } catch (error) {
-      setIsLoading(false);
+    getCars().catch((error) => {
       console.log(error);
-    }
+      setIsLoading(false);
+    });
+
     // setIsLoading(false);
   }, [authCtx.localId]);
 
@@ -65,7 +65,8 @@ const Home = () => {
         gap={2}
         // sx={{ overflowY: "scroll" }}
       >
-        {cars &&
+        {!isLoading &&
+          cars &&
           cars.map((car) => {
             const [carId, carInfo] = car;
             return (
