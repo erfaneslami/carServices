@@ -3,15 +3,49 @@ import {
   Box,
   Button,
   Divider,
+  Skeleton,
   Toolbar,
-  // Typography,
+  Typography,
 } from "@mui/material";
 import AuthHeader from "../Components/Auth/AuthHeader";
 import CarCard from "../Components/Home/CarCard";
 import AddIcon from "@mui/icons-material/Add";
 import { Link } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import AuthContext from "../Store/Auth-context";
 
 const Home = () => {
+  const authCtx = useContext(AuthContext);
+  const [cars, setCars] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const getCars = async () => {
+      setIsLoading(true);
+      const response = await fetch(
+        `https://carservices-server-default-rtdb.firebaseio.com/users/${authCtx.localId}/cars.json`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const cars = await response.json();
+
+      setCars(Object.entries(cars));
+      setIsLoading(false);
+    };
+
+    try {
+      getCars();
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error);
+    }
+    // setIsLoading(false);
+  }, [authCtx.localId]);
+
   return (
     <Box
       component={"main"}
@@ -31,14 +65,49 @@ const Home = () => {
         gap={2}
         // sx={{ overflowY: "scroll" }}
       >
-        <CarCard brand="Peugeot" carName="207" km="30.000" />
-        <CarCard brand="Peugeot" carName="Pars" km="170.000" />
-        <CarCard brand="Peugeot" carName="Pars" km="170.000" />
-        <CarCard brand="Peugeot" carName="Pars" km="170.000" />
-        <CarCard brand="Peugeot" carName="Pars" km="170.000" />
-        {/* <Typography sx={{ margin: "30vh 0" }} variant="h4">
-          Garage is Empty!
-        </Typography> */}
+        {cars &&
+          cars.map((car) => {
+            const [carId, carInfo] = car;
+            return (
+              <CarCard
+                key={carId}
+                brand={carInfo.carBrand}
+                carName={carInfo.carName}
+                km={carInfo.carKM}
+                id={carId}
+              />
+            );
+          })}
+
+        {isLoading && (
+          <Box
+            display={"grid"}
+            gridTemplateColumns="1fr 2.5fr"
+            alignItems="stretch"
+            columnGap={2}
+          >
+            <Box sx={{ maxHeight: "18vh" }}>
+              <Skeleton variant="text" height={"30%"} />
+              <Skeleton variant="text" height={"25%"} />
+              <Skeleton variant="text" height={"15%"} />
+              <Skeleton variant="text" height={"35%"} />
+            </Box>
+            <Box>
+              <Skeleton
+                variant="rectangular"
+                height={"18vh"}
+                // width={"55vw"}
+                sx={{ marginLeft: "auto" }}
+              />
+            </Box>
+          </Box>
+        )}
+
+        {!cars && (
+          <Typography sx={{ margin: "30vh 0" }} variant="h4">
+            Garage is Empty!
+          </Typography>
+        )}
       </Box>
       <AppBar position="fixed" color="primary" sx={{ top: "auto", bottom: 0 }}>
         <Toolbar sx={{ width: "100%" }}>

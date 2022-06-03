@@ -17,7 +17,7 @@ const CarCard = (props) => {
           <Typography variant="h5">{props.brand}</Typography>
           <Typography variant="h6">{props.carName}</Typography>
           <Typography variant="subtitle1">{props.km} KM</Typography>
-          <Button variant="contained" sx={{ margin: "2rem 0" }}>
+          <Button variant="contained" component="a" sx={{ margin: "2rem 0" }}>
             Detail
           </Button>
         </CardContent>
