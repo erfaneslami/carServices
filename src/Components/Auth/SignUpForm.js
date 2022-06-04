@@ -57,6 +57,7 @@ const SignUpForm = () => {
           }),
         }
       );
+      console.log(responseToDatabase);
 
       setLoading(false);
       authCtx.signup(data.idToken, userData.fullName, data.localId);
