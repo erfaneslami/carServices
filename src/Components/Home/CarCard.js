@@ -15,8 +15,10 @@ import tara from "../../Assets/img/tara.png";
 import rana from "../../Assets/img/rana.png";
 import vitara from "../../Assets/img/vitara.png";
 import defaultImg from "../../Assets/img/default.svg";
+import { Link, useNavigate } from "react-router-dom";
 
 const CarCard = (props) => {
+  const navigate = useNavigate();
   const cover =
     `${props.carName}`.toLowerCase() === "207"
       ? towOSeven
@@ -34,6 +36,7 @@ const CarCard = (props) => {
       : `${props.carName}`.toLowerCase() === "bereliance"
       ? bereliance
       : defaultImg;
+
   return (
     <Card>
       <CardActionArea sx={{ display: "flex", justifyContent: "space-around" }}>
@@ -41,7 +44,12 @@ const CarCard = (props) => {
           <Typography variant="h5">{props.brand}</Typography>
           <Typography variant="h6">{props.carName}</Typography>
           <Typography variant="subtitle1">{props.km} KM</Typography>
-          <Button variant="contained" component="a" sx={{ margin: "2rem 0" }}>
+          <Button
+            variant="contained"
+            component={Link}
+            to={props.id}
+            sx={{ margin: "2rem 0" }}
+          >
             Detail
           </Button>
         </CardContent>
