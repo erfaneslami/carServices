@@ -61,7 +61,7 @@ const SignUpForm = () => {
 
       setLoading(false);
       authCtx.signup(data.idToken, userData.fullName, data.localId);
-      navigate("/welcome", { replace: true });
+      navigate("/Garage", { replace: true });
     } catch (error) {
       setLoading(false);
       console.log(error);

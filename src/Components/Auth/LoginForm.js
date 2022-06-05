@@ -59,7 +59,7 @@ const LoginForm = () => {
 
       authCtx.login(data.idToken, data.localId, username.username);
       // redirect
-      navigate("/welcome", { replace: true });
+      navigate("/Garage", { replace: true });
       setLoading(false);
     } catch (error) {
       setError(error?.error?.message);
