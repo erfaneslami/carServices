@@ -1,8 +1,9 @@
 import { Box, Button, Typography } from "@mui/material";
-import { useContext, useState } from "react";
+import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import AuthContext from "../../Store/Auth-context";
+import { signup } from "../../StoreRedux/AuthSlice";
 import LoadingSpinner from "../../UI/LoadingSpinner";
 import FormInput from "./FormInput";
 
@@ -19,54 +20,23 @@ const SignUpForm = () => {
       confirmPass: "",
     },
   });
+
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const notification = useSelector((state) => state.ui.notification);
   const { errors } = formState;
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const authCtx = useContext(AuthContext);
+
+  console.log(notification);
+
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (isLoggedIn) navigate("/Garage", { replace: true });
+    console.log(isLoggedIn);
+  }, [isLoggedIn, navigate]);
+
   const onSubmit = async (userData) => {
-    try {
-      setLoading(true);
-      const response = await fetch(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBCrkX0aUvOpsnp-QAW1mds8-r9HDqrWfc",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-
-          body: JSON.stringify({
-            email: userData.email,
-            password: userData.password,
-            returnSecureToken: true,
-          }),
-        }
-      );
-
-      const data = await response.json();
-
-      if (data.error) throw data;
-
-      const responseToDatabase = await fetch(
-        `https://carservices-server-default-rtdb.firebaseio.com/users/${data.localId}.json`,
-        {
-          method: "PUT",
-          body: JSON.stringify({
-            username: userData.fullName,
-          }),
-        }
-      );
-      console.log(responseToDatabase);
-
-      setLoading(false);
-      authCtx.signup(data.idToken, userData.fullName, data.localId);
-      navigate("/Garage", { replace: true });
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
-      setError(error?.error?.message);
-    }
+    dispatch(signup(userData));
   };
 
   return (
@@ -75,8 +45,10 @@ const SignUpForm = () => {
       onSubmit={handleSubmit(onSubmit)}
       sx={{ width: "70vw", margin: "0 auto" }}
     >
-      {error && <Typography>{error}</Typography>}
-      {loading && <LoadingSpinner />}
+      {notification?.status === "error" && (
+        <Typography>{notification.message}</Typography>
+      )}
+      {notification?.status === "pending" && <LoadingSpinner />}
       <Controller
         name="fullName"
         control={control}

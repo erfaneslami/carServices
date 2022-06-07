@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { uiActions } from "./UISlice";
 
 const initialState = {
   isLoggedIn: false,
@@ -27,9 +28,13 @@ const AuthSlice = createSlice({
   },
 });
 
-const signup = (userData) => {
+export const signup = (userData) => {
   return async (dispatch) => {
     const sendSignupReq = async () => {
+      dispatch(
+        uiActions.setNotification({ status: "pending", title: "", message: "" })
+      );
+
       const response = await fetch(
         "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBCrkX0aUvOpsnp-QAW1mds8-r9HDqrWfc",
         {
@@ -77,7 +82,27 @@ const signup = (userData) => {
     try {
       await sendSignupReq();
     } catch (error) {
-      console.log(error);
+      let message;
+      switch (error.error.message) {
+        case "EMAIL_EXISTS":
+          message = "this email is already exists !";
+          break;
+        case "TOO_MANY_ATTEMPTS_TRY_LATER":
+          message =
+            "We have blocked all requests from this device due to unusual activity!";
+          break;
+        default:
+          message = "something went wrong please try again";
+          break;
+      }
+
+      dispatch(
+        uiActions.setNotification({
+          status: "error",
+          title: "Error",
+          message: message,
+        })
+      );
     }
   };
 };
